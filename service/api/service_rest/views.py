@@ -11,6 +11,7 @@ class TechnicianEncoder(ModelEncoder):
         "id",
         "first_name",
         "last_name",
+        "employee_id",
     ]
 
 class AutomobileVOEncoder(ModelEncoder):
@@ -59,24 +60,33 @@ def api_appointments(request):
             )
         except:
             response = JsonResponse(
-                {"message": "Could not create the automobile"}
+                {"message": "Could not create the appointment"}
             )
             response.status_code = 400
             return response
 
+@require_http_methods(["GET", "PUT", "DELETE"])
+def api_appointment(request, pk, action=None):
+    try:
+        model = Appointment.objects.get(id=pk)
+    except Appointment.DoesNotExist:
+        return JsonResponse({"message": "Does not exist"}, status=404)
 
+    if request.method == "GET":
+        return JsonResponse(model, encoder=AppointmentEncoder, safe=False)
+    elif request.method == "DELETE":
+        model.delete()
+        return JsonResponse({"message": "Appointment deleted successfully"})
 
+    if action == "cancel":
+        model.status = "canceled"
+    elif action == "finish":
+        model.status = "finished"
+    else:
+        return JsonResponse({"message": "Invalid action for PUT request"}, status=405)
 
-
-
-
-
-
-
-
-
-
-
+    model.save()
+    return JsonResponse(model, encoder=AppointmentEncoder, safe=False)
 
 @require_http_methods(["GET", "POST"])
 def api_technicians(request):
@@ -102,3 +112,18 @@ def api_technicians(request):
             )
             response.status_code = 400
             return response
+
+
+@require_http_methods(["GET", "DELETE"])
+def api_technician(request, pk):
+    if request.method == "GET":
+        location = Technician.objects.get(id=pk)
+        return JsonResponse(
+            location,
+            encoder=TechnicianEncoder,
+            safe=False,
+        )
+    else:
+        request.method == "DELETE"
+        count, _ = Technician.objects.filter(id=pk).delete()
+        return JsonResponse({"deleted": count > 0})

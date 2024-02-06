@@ -52,14 +52,17 @@ class SaleEncoder(ModelEncoder):
 
 
 @require_http_methods(["GET", "POST", "DELETE"])
-def api_salespeople(request):
+def api_salespeople(request, pk):
     if request.method == "GET":
         salesperson = Salesperson.objects.all()
         return JsonResponse(
             {"salesperson": salesperson},
             encoder=SalespersonEncoder
         )
-    elif:
+    elif request.method == "DELETE":
+        count, _ = Salesperson.objects.filter(id=pk).delete()
+        return JsonResponse({"deleted": count > 0})
+    else:
         try:
             content = json.loads(request.body)
             salesperson = Salesperson.objects.create(**content)
@@ -74,22 +77,21 @@ def api_salespeople(request):
             )
             response.status_code = 400
             return response
-    else:
-        request.method == "DELETE":
-        count, _ = Salesperson.objects.filter(id=pk).delete()
-        return JsonResponse({"deleted": count > 0})
 
 
 
 @require_http_methods(["GET", "POST", "DELETE"])
-def api_customers(request):
+def api_customers(request, pk):
     if request.method == "GET":
         customer = Customer.objects.all()
         return JsonResponse(
             {"customer": customer},
             encoder=CustomerEncoder
         )
-    elif:
+    elif request.method == "DELETE":
+        count, _ = Customer.objects.filter(id=pk).delete()
+        return JsonResponse({"deleted": count > 0})
+    else:
         try:
             content = json.loads(request.body)
             customer = Customer.objects.create(**content)
@@ -104,21 +106,20 @@ def api_customers(request):
             )
             response.status_code = 400
             return response
-    else:
-        request.method == "DELETE":
-        count, _ = Customer.objects.filter(id=pk).delete()
-        return JsonResponse({"deleted": count > 0})
 
 
 @require_http_methods(["GET", "POST", "DELETE"])
-def api_sales(request):
+def api_sales(request, pk):
     if request.method == "GET":
         sale = Sale.objects.all()
         return JsonResponse(
             {"sale": sale},
             encoder=SaleEncoder
         )
-    elif:
+    elif request.method == "DELETE":
+        count, _ = Sale.objects.filter(id=pk).delete()
+        return JsonResponse({"deleted": count > 0})
+    else:
         try:
             content = json.loads(request.body)
             sale = Sale.objects.create(**content)
@@ -133,7 +134,3 @@ def api_sales(request):
             )
             response.status_code = 400
             return response
-    else:
-        request.method == "DELETE":
-        count, _ = Sale.objects.filter(id=pk).delete()
-        return JsonResponse({"deleted": count > 0})

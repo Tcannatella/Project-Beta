@@ -78,3 +78,62 @@ def api_salespeople(request):
         request.method == "DELETE":
         count, _ = Salesperson.objects.filter(id=pk).delete()
         return JsonResponse({"deleted": count > 0})
+
+
+
+@require_http_methods(["GET", "POST", "DELETE"])
+def api_customers(request):
+    if request.method == "GET":
+        customer = Customer.objects.all()
+        return JsonResponse(
+            {"customer": customer},
+            encoder=CustomerEncoder
+        )
+    elif:
+        try:
+            content = json.loads(request.body)
+            customer = Customer.objects.create(**content)
+            return JsonResponse(
+                customer,
+                encoder=CustomerEncoder,
+                safe=False
+            )
+        except:
+            response = JsonResponse(
+                {"message": "Could not create a Customer"}
+            )
+            response.status_code = 400
+            return response
+    else:
+        request.method == "DELETE":
+        count, _ = Customer.objects.filter(id=pk).delete()
+        return JsonResponse({"deleted": count > 0})
+
+
+@require_http_methods(["GET", "POST", "DELETE"])
+def api_sales(request):
+    if request.method == "GET":
+        sale = Sale.objects.all()
+        return JsonResponse(
+            {"sale": sale},
+            encoder=SaleEncoder
+        )
+    elif:
+        try:
+            content = json.loads(request.body)
+            sale = Sale.objects.create(**content)
+            return JsonResponse(
+                sale,
+                encoder=SaleEncoder,
+                safe=False
+            )
+        except:
+            response = JsonResponse(
+                {"message": "Could not create a Sale"}
+            )
+            response.status_code = 400
+            return response
+    else:
+        request.method == "DELETE":
+        count, _ = Sale.objects.filter(id=pk).delete()
+        return JsonResponse({"deleted": count > 0})

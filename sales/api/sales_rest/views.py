@@ -87,17 +87,14 @@ def api_salesperson(request, pk):
     return JsonResponse({"deleted": count > 0})
 
 
-@require_http_methods(["GET", "POST", "DELETE"])
-def api_customers(request, pk):
+@require_http_methods(["GET", "POST"])
+def api_customers(request):
     if request.method == "GET":
         customer = Customer.objects.all()
         return JsonResponse(
             {"customer": customer},
             encoder=CustomerEncoder
         )
-    elif request.method == "DELETE":
-        count, _ = Customer.objects.filter(id=pk).delete()
-        return JsonResponse({"deleted": count > 0})
     else:
         try:
             content = json.loads(request.body)
@@ -107,25 +104,30 @@ def api_customers(request, pk):
                 encoder=CustomerEncoder,
                 safe=False
             )
-        except:
+        except json.JSONDecodeError:
             response = JsonResponse(
-                {"message": "Could not create a Customer"}
+                {"message": "Could not create a Customer"},
+                status=400
             )
-            response.status_code = 400
             return response
 
 
-@require_http_methods(["GET", "POST", "DELETE"])
-def api_sales(request, pk):
+@require_http_methods(["DELETE"])
+def api_customer(request, pk):
+    request.method == "DELETE"
+    count, _ = Customer.objects.filter(id=pk).delete()
+    return JsonResponse({"deleted": count > 0})
+
+
+
+@require_http_methods(["GET", "POST"])
+def api_sales(request):
     if request.method == "GET":
         sale = Sale.objects.all()
         return JsonResponse(
             {"sale": sale},
             encoder=SaleEncoder
         )
-    elif request.method == "DELETE":
-        count, _ = Sale.objects.filter(id=pk).delete()
-        return JsonResponse({"deleted": count > 0})
     else:
         try:
             content = json.loads(request.body)
@@ -135,9 +137,16 @@ def api_sales(request, pk):
                 encoder=SaleEncoder,
                 safe=False
             )
-        except:
+        except json.JSONDecodeError:
             response = JsonResponse(
-                {"message": "Could not create a Sale"}
+                {"message": "Could not create a Sale"},
+                status=400
             )
-            response.status_code = 400
             return response
+
+
+@require_http_methods(["DELETE"])
+def api_sale(request, pk):
+    request.method == "DELETE"
+    count, _ = Sale.objects.filter(id=pk).delete()
+    return JsonResponse({"deleted": count > 0})

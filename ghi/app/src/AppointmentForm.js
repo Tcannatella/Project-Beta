@@ -3,12 +3,11 @@ import React, { useEffect, useState } from 'react';
 function AppointmentForm() {
   const [dateTime, setDateTime] = useState('');
   const [reason, setReason] = useState('');
+  const [status, setStatus] = useState('');
   const [vin, setVin] = useState('');
   const [customer, setCustomer] = useState('');
   const [technician, setTechnician] = useState('');
   const [technicians, setTechnicians] = useState([]);
-  const [date, setDate] = useState('');
-  const [time, setTime] = useState('');
 
   const fetchData = async () => {
     try {
@@ -34,9 +33,11 @@ function AppointmentForm() {
       date_time: dateTime,
       reason: reason,
       customer: customer,
+      status: status,
       vin: vin,
-      technician: technician,
+      technician_id: technician,
     };
+    console.log("DATA", data)
     try {
       const appointmentsUrl = 'http://localhost:8080/api/appointments/';
       const fetchOptions = {
@@ -49,12 +50,17 @@ function AppointmentForm() {
 
       const appointmentsResponse = await fetch(appointmentsUrl, fetchOptions);
 
+      const responseData = await appointmentsResponse.json();
+      console.log("Response data:", responseData)
+
       if (appointmentsResponse.ok) {
-        setDateTime('');
         setReason('');
+        setStatus('');
         setVin('');
         setCustomer('');
         setTechnician('');
+        setDateTime('');
+
       } else {
         console.error('Error creating appointment:', appointmentsResponse.statusText);
       }
@@ -62,6 +68,7 @@ function AppointmentForm() {
       console.error('Error creating appointment:', error);
     }
   };
+
 
   const handleChangeReason = (event) => {
     const value = event.target.value;
@@ -83,14 +90,9 @@ function AppointmentForm() {
     setTechnician(value);
   };
 
-  const handleChangeDate = (event) => {
+  const handleChangeDateTime = (event) => {
     const value = event.target.value;
-    setDate(value);
-  };
-
-  const handleChangeTime = (event) => {
-    const value = event.target.value;
-    setTime(value);
+    setDateTime(value);
   };
 
   return (
@@ -125,31 +127,17 @@ function AppointmentForm() {
               />
               <label htmlFor="customer">Customer</label>
             </div>
-            <div className="row">
-              <div className="col mb-3">
-                <label htmlFor="date">Date:</label>
-                <input
-                  value={date}
-                  onChange={handleChangeDate}
-                  required
-                  type="date"
-                  name="date"
-                  id="date"
-                  className="form-control"
-                />
-              </div>
-              <div className="col mb-3">
-                <label htmlFor="time">Time:</label>
-                <input
-                  value={time}
-                  onChange={handleChangeTime}
-                  required
-                  type="time"
-                  name="time"
-                  id="time"
-                  className="form-control"
-                />
-              </div>
+            <div className="form-floating mb-3">
+              <input
+                value={dateTime}
+                onChange={handleChangeDateTime}
+                required
+                type="datetime-local"
+                name="datetime"
+                id="datetime"
+                className="form-control"
+              />
+              <label htmlFor="datetime">Date and Time</label>
             </div>
             <div className="form-floating mb-3">
               <select

@@ -45,36 +45,41 @@ def api_appointments(request):
             {"appointments": appointments},
             encoder=AppointmentEncoder,
         )
-    # else:
-    #     try:
-    #         content = json.loads(request.body)
-    #         tech_id = content.get("technician_id")
-    #         technician = Technician.objects.get(pk=tech_id)
-    #         content["technician"] = technician
-    #         appointment = Appointment.objects.create(**content)
-    #         return JsonResponse(
-    #             appointment,
-    #             encoder=AppointmentEncoder,
-    #             safe=False,
-    #         )
     else:
         content = json.loads(request.body)
 
         try:
-            tech_id = content["technician_id"]
+
+            tech_id = content.get("technician_id")
             technician = Technician.objects.get(pk=tech_id)
             content["technician"] = technician
-        except Technician.DoesNotExist:
+            appointment = Appointment.objects.create(**content)
             return JsonResponse(
-                {"message": "Invalid conference id"},
-                status=400,
+                appointment,
+                encoder=AppointmentEncoder,
+                safe=False,
             )
+    # else:
+        # content = json.loads(request.body)
+
+        # try:
+        #     tech_id = content["technician"]
+        #     technician = Technician.objects.get(pk=tech_id)
+        #     content["technician"] = technician
+        #     appointment = Appointment.objects.create(**content)
+        #     return JsonResponse(
+        #         {"message": "Appointment created successfully"},
+        #         status=201,
+        #     )
         except (Technician.DoesNotExist, json.JSONDecodeError):
             response = JsonResponse(
-                {"message": "Could not create the appointment"},
-                status=400
+             {"message": "Could not create the appointment"},
+            status=400
             )
             return response
+
+
+
 
 @require_http_methods(["GET", "DELETE", "PUT", ])
 def api_appointment(request, pk, action=None):

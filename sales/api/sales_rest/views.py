@@ -12,6 +12,7 @@ from .models import AutomobileVO, Customer, Sale, Salesperson
 class AutomobileVOEncoder(ModelEncoder):
     model = AutomobileVO
     properties = [
+        "id",
         "vin",
         "sold"
     ]
@@ -20,6 +21,7 @@ class AutomobileVOEncoder(ModelEncoder):
 class SalespersonEncoder(ModelEncoder):
     model = Salesperson
     properties = [
+        "id",
         "first_name",
         "last_name",
         "employee_id"
@@ -29,6 +31,7 @@ class SalespersonEncoder(ModelEncoder):
 class CustomerEncoder(ModelEncoder):
     model = Customer
     properties = [
+        "id",
         "first_name",
         "last_name",
         "address",
@@ -39,6 +42,7 @@ class CustomerEncoder(ModelEncoder):
 class SaleEncoder(ModelEncoder):
     model = Sale
     properties = [
+        "id",
         "price",
         "customer",
         "salesperson",
@@ -51,17 +55,14 @@ class SaleEncoder(ModelEncoder):
     }
 
 
-@require_http_methods(["GET", "POST", "DELETE"])
-def api_salespeople(request, pk):
+@require_http_methods(["GET", "POST"])
+def api_salespeople(request):
     if request.method == "GET":
         salesperson = Salesperson.objects.all()
         return JsonResponse(
             {"salesperson": salesperson},
             encoder=SalespersonEncoder
         )
-    elif request.method == "DELETE":
-        count, _ = Salesperson.objects.filter(id=pk).delete()
-        return JsonResponse({"deleted": count > 0})
     else:
         try:
             content = json.loads(request.body)
@@ -71,13 +72,19 @@ def api_salespeople(request, pk):
                 encoder=SalespersonEncoder,
                 safe=False
             )
-        except:
+        except json.JSONDecodeError:
             response = JsonResponse(
-                {"message": "Could not create a Salesperson"}
+                {"message": "Could not create a Salesperson"},
+                status=400
             )
-            response.status_code = 400
             return response
 
+
+@require_http_methods(["DELETE"])
+def api_salesperson(request, pk):
+    request.method == "DELETE"
+    count, _ = Salesperson.objects.filter(id=pk).delete()
+    return JsonResponse({"deleted": count > 0})
 
 
 @require_http_methods(["GET", "POST", "DELETE"])

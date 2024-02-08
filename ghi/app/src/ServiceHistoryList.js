@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 
-function AppointmentList() {
+function ServiceHistoryList() {
     const [appointments, setAppointments] = useState([]);
     const [autos, setAutos] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [filteredAppointments, setFilteredAppointments] = useState([]);
 
     const fetchData = async () => {
         try {
@@ -12,10 +14,12 @@ function AppointmentList() {
             if (appointmentsResponse.ok && autosResponse.ok) {
                 const { appointments } = await appointmentsResponse.json();
                 const { autos } = await autosResponse.json();
-                console.log("HERE", appointments)
+                console.log("APP:",appointments)
+                console.log("AUTO:",autos)
 
                 setAppointments(appointments);
                 setAutos(autos);
+                setFilteredAppointments(appointments);
             } else {
                 console.error('An error occurred fetching the data');
             }
@@ -28,40 +32,41 @@ function AppointmentList() {
         fetchData();
     }, []);
 
-    const cancelAppointment = async (id) => {
-        try {
-            const response = await fetch(`http://localhost:8080/api/appointments/${id}/cancel/`, {
-                method: 'PUT',
-            });
-            if (response.ok) {
-                fetchData()
-            } else {
-                console.error('Failed to cancel appointment:', response.statusText);
-            }
-        } catch (error) {
-            console.error('Error canceling appointment:', error);
-        }
+    const handleSearch = () => {
+        const filtered = appointments.filter(app =>
+            app.vin.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setFilteredAppointments(filtered);
     };
 
-    const finishAppointment = async (id) => {
-        try {
-            const response = await fetch(`http://localhost:8080/api/appointments/${id}/finish/`, {
-                method: 'PUT',
-            });
-            if (response.ok) {
-                fetchData()
-            } else {
-                console.error('Failed to finish appointment:', response.statusText);
-            }
-        } catch (error) {
-            console.error('Error finishing appointment:', error);
+    useEffect(() => {
+        if (searchTerm === '') {
+            setFilteredAppointments(appointments);
         }
-    };
+    }, [searchTerm, appointments]);
 
     return (
         <div className="my-5 container">
             <div className="row">
                 <h1>Service Appointments</h1>
+                <div className="input-group mb-3">
+                    <input
+                        type="text"
+                        placeholder="Search by VIN"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="form-control"
+                    />
+                    <div className="input-group-append">
+                        <button
+                            className="btn btn-primary"
+                            type="button"
+                            onClick={handleSearch}
+                        >
+                            Search
+                        </button>
+                    </div>
+                </div>
 
                 <table className="table table-striped m-3">
                     <thead>
@@ -72,10 +77,11 @@ function AppointmentList() {
                             <th>Date/Time</th>
                             <th>Technician</th>
                             <th>Reason</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {appointments.filter(appt => appt.status === "created").map(app => (
+                        {filteredAppointments.map(app => (
                             <tr key={app.id}>
                                 <td>{app.vin}</td>
                                 <td>{autos.some(auto => auto.vin === app.vin) ? "Yes" : "No"}</td>
@@ -83,10 +89,7 @@ function AppointmentList() {
                                 <td>{new Date(app.date_time).toLocaleString()}</td>
                                 <td>{app.technician.first_name}</td>
                                 <td>{app.reason}</td>
-                                <td>
-                                    <button onClick={() => cancelAppointment(app.id)}>Cancel</button>
-                                    <button onClick={() => finishAppointment(app.id)}>Finish</button>
-                                </td>
+                                <td>{app.status}</td>
                             </tr>
                         ))}
                     </tbody>
@@ -96,4 +99,5 @@ function AppointmentList() {
     );
 }
 
-export default AppointmentList;
+
+export default ServiceHistoryList;

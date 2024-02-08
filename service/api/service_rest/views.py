@@ -66,9 +66,6 @@ def api_appointments(request):
             )
             return response
 
-
-
-
 @require_http_methods(["GET", "DELETE", "PUT", ])
 def api_appointment(request, pk, action=None):
     try:

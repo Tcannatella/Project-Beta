@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 function AppointmentForm() {
   const [dateTime, setDateTime] = useState('');
   const [reason, setReason] = useState('');
-  const [status, setStatus] = useState('');
   const [vin, setVin] = useState('');
   const [customer, setCustomer] = useState('');
   const [technician, setTechnician] = useState('');
@@ -33,11 +32,9 @@ function AppointmentForm() {
       date_time: dateTime,
       reason: reason,
       customer: customer,
-      status: status,
       vin: vin,
       technician_id: technician,
     };
-    console.log("DATA", data)
     try {
       const appointmentsUrl = 'http://localhost:8080/api/appointments/';
       const fetchOptions = {
@@ -55,7 +52,6 @@ function AppointmentForm() {
 
       if (appointmentsResponse.ok) {
         setReason('');
-        setStatus('');
         setVin('');
         setCustomer('');
         setTechnician('');

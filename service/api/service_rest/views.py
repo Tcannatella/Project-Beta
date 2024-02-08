@@ -59,18 +59,6 @@ def api_appointments(request):
                 encoder=AppointmentEncoder,
                 safe=False,
             )
-    # else:
-        # content = json.loads(request.body)
-
-        # try:
-        #     tech_id = content["technician"]
-        #     technician = Technician.objects.get(pk=tech_id)
-        #     content["technician"] = technician
-        #     appointment = Appointment.objects.create(**content)
-        #     return JsonResponse(
-        #         {"message": "Appointment created successfully"},
-        #         status=201,
-        #     )
         except (Technician.DoesNotExist, json.JSONDecodeError):
             response = JsonResponse(
              {"message": "Could not create the appointment"},

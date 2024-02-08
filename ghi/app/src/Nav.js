@@ -21,8 +21,13 @@ function Nav() {
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link active" aria-current="page" to="appointments">
+              <NavLink className="nav-link active" aria-current="page" to="appointments/new">
               Create a service appointment
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link active" aria-current="page" to="appointments">
+              Service appointments
               </NavLink>
             </li>
           </ul>

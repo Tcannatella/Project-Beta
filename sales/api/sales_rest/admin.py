@@ -7,13 +7,16 @@ from .models import AutomobileVO, Salesperson, Customer, Sale
 class AutomobileVOAdmin(admin.ModelAdmin):
     pass
 
+
 @admin.register(Salesperson)
 class SalespersonAdmin(admin.ModelAdmin):
     pass
 
+
 @admin.register(Customer)
 class CustomerAdmin(admin.ModelAdmin):
     pass
+
 
 @admin.register(Sale)
 class SaleAdmin(admin.ModelAdmin):

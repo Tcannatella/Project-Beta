@@ -32,7 +32,7 @@ class Customer(models.Model):
 
 class Sale(models.Model):
     price = models.DecimalField(max_digits=100, decimal_places=2)
-    automodile = models.ForeignKey(
+    automobile = models.ForeignKey(
         AutomobileVO,
         related_name="automobile",
         on_delete=models.CASCADE,

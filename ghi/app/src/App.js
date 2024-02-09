@@ -6,6 +6,13 @@ import TechniciansList from './TechnicianList';
 import AppointmentForm from './AppointmentForm';
 import AppointmentList from './AppointmentList';
 import ServiceHistoryList from './ServiceHistoryList';
+import CustomerForm from './CustomerForm';
+import CustomerList from './CustomerList';
+import SaleForm from './SaleForm';
+import SaleList from './SaleList';
+import SalespersonForm from './SalespersonForm';
+import SalespersonList from './SalespersonList';
+
 
 function App() {
   return (
@@ -19,6 +26,12 @@ function App() {
           <Route path="appointments/new" element={<AppointmentForm />} />
           <Route path="appointments" element={<AppointmentList />} />
           <Route path="appointments/history" element={<ServiceHistoryList />} />
+          <Route path="customers" element={<CustomerList />} />
+          <Route path="customers/new" element={<CustomerForm />} />
+          <Route path="sales" element={<SaleList />} />
+          <Route path="sales/new" element={<SaleForm />} />
+          <Route path="salespeople" element={<SalespersonList />} />
+          <Route path="salespeople/new" element={<SalespersonForm />} />
         </Routes>
       </div>
     </BrowserRouter>

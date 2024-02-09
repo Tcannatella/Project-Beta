@@ -14,8 +14,6 @@ function ServiceHistoryList() {
             if (appointmentsResponse.ok && autosResponse.ok) {
                 const { appointments } = await appointmentsResponse.json();
                 const { autos } = await autosResponse.json();
-                console.log("APP:",appointments)
-                console.log("AUTO:",autos)
 
                 setAppointments(appointments);
                 setAutos(autos);

@@ -13,6 +13,8 @@ import SaleList from './SaleList';
 import SalespersonForm from './SalespersonForm';
 import SalespersonList from './SalespersonList';
 
+import ManufacturerList from './ManufacturerList';
+import ManufacturerForm from './ManufacturerForm';
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
           <Route path="appointments/new" element={<AppointmentForm />} />
           <Route path="appointments" element={<AppointmentList />} />
           <Route path="appointments/history" element={<ServiceHistoryList />} />
+          <Route path="manufacturers" element={<ManufacturerList />} />
+          <Route path="manufacturers/new" element={<ManufacturerForm />} />
           <Route path="customers" element={<CustomerList />} />
           <Route path="customers/new" element={<CustomerForm />} />
           <Route path="sales" element={<SaleList />} />

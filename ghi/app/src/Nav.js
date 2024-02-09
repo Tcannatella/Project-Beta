@@ -11,7 +11,7 @@ function Nav() {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <NavLink className="nav-link active" aria-current="page" to="technicians/new">
+              <NavLink className="nav-link active" aria-current="page" to="technicians/create">
                 Add a Technician
               </NavLink>
             </li>
@@ -21,7 +21,7 @@ function Nav() {
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link active" aria-current="page" to="appointments/new">
+              <NavLink className="nav-link active" aria-current="page" to="appointments/create">
               Create a service appointment
               </NavLink>
             </li>
@@ -41,7 +41,7 @@ function Nav() {
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link active" aria-current="page" to="manufacturers/new">
+              <NavLink className="nav-link active" aria-current="page" to="manufacturers/create">
               Creat a Manufacturer
               </NavLink>
             </li>
@@ -51,7 +51,7 @@ function Nav() {
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link active" aria-current="page" to="sales/new">
+              <NavLink className="nav-link active" aria-current="page" to="sales/create">
               New Sale
               </NavLink>
             </li>
@@ -61,7 +61,7 @@ function Nav() {
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link active" aria-current="page" to="salespeople/new">
+              <NavLink className="nav-link active" aria-current="page" to="salespeople/create">
               New Salesperson
               </NavLink>
             </li>
@@ -71,8 +71,23 @@ function Nav() {
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link active" aria-current="page" to="customers/new">
+              <NavLink className="nav-link active" aria-current="page" to="customers/create">
               New Customer
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link active" aria-current="page" to="models">
+              Models
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link active" aria-current="page" to="models/create">
+              Create a model
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link active" aria-current="page" to="automobiles">
+              Automobiles
               </NavLink>
             </li>
           </ul>

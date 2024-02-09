@@ -115,7 +115,7 @@ function CustomerForm() {
                   id="phoneNumber"
                   className="form-control"
                 />
-                <label htmlFor="address">Phone Number</label>
+                <label htmlFor="phoneNumber">Phone Number</label>
               </div>
               <button className="btn btn-primary">Create</button>
             </form>

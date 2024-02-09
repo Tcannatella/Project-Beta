@@ -26,7 +26,10 @@ docker-compose up
 - After running these commands, make sure all of your Docker containers are running
 
 - View the project in the browser: http://localhost:3000/
-$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$IMG$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+
+![img](CarCarWebsite.png)
+
 ## Design
 
 CarCar is made up of 3 microservices which interact with one another.
@@ -34,7 +37,9 @@ CarCar is made up of 3 microservices which interact with one another.
 - **Inventory**
 - **Services**
 - **Sales**
-$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$IMG$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+![img](Diagram.png)
+
 
 ## Inventory Microservice
 

@@ -12,7 +12,6 @@ function AppointmentList() {
             if (appointmentsResponse.ok && autosResponse.ok) {
                 const { appointments } = await appointmentsResponse.json();
                 const { autos } = await autosResponse.json();
-                console.log("HERE", appointments)
 
                 setAppointments(appointments);
                 setAutos(autos);

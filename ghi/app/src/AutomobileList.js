@@ -8,7 +8,6 @@ function AutomobileList() {
         if (response.ok) {
             const { autos } = await response.json();
             setAutos(autos);
-            console.log("HERE:",autos)
 
         }else {
             console.error('An error occured fetching the data')

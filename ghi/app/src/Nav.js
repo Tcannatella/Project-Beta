@@ -90,6 +90,11 @@ function Nav() {
               Automobiles
               </NavLink>
             </li>
+            <li className="nav-item">
+              <NavLink className="nav-link active" aria-current="page" to="automobiles/create">
+              Create an automobiles
+              </NavLink>
+            </li>
           </ul>
         </div>
       </div>

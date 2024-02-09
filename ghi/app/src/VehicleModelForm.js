@@ -32,7 +32,7 @@ function VehicleModelForm() {
       const data = {
         name: name,
         picture_url: pictureUrl,
-        manufacturer: manufacturer
+        manufacturer_id: manufacturer
       };
 
       const modelsUrl = 'http://localhost:8100/api/models/';

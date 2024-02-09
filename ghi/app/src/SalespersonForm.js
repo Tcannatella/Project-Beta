@@ -3,18 +3,17 @@ import React, { useEffect, useState } from "react";
 function SalespersonForm() {
     const [ firstName, setFirstName ] = useState('');
     const [ lastName, setLastName ] = useState('');
-    const [ address, setAddress ] = useState('');
-    const [ phoneNumber, setPhoneNumber ] = useState('');
+    const [ employeeId, setEmployeeId ] = useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = {};
         data.firstName = firstName;
         data.lastName = lastName;
-        data.address = address;
-        data.phoneNumber = phoneNumber;
+        data.employeeId = employeeId;
 
-        const customerUrl = 'http://localhost:8090/api/customers/';
+
+        const salespersonUrl = 'http://localhost:8090/api/salespeople/';
         const fetchOptions = {
             method: 'post',
             body: JSON.stringify(data),
@@ -24,15 +23,15 @@ function SalespersonForm() {
         };
 
         try {
-            const customerResponse = await fetch(customerUrl, fetchOptions);
+            const salespersonResponse = await fetch(salespersonUrl, fetchOptions);
 
-            if (customerResponse.ok) {
+            if (salespersonResponse.ok) {
                 setFirstName('');
                 setLastName('');
-                setAddress('');
-                setPhoneNumber('');
+                setEmployeeId('');
+
             } else {
-                console.error('Failed to create Customer:', customerResponse.statusText);
+                console.error('Failed to create Salesperson:', salespersonResponse.statusText);
             }
         } catch (error) {
             console.error('Fetch error:', error);
@@ -49,22 +48,18 @@ function SalespersonForm() {
         setLastName(value);
     }
 
-    const handleChangeAddress = (event) => {
+    const handleChangeEmployeeId = (event) => {
         const value = event.target.value;
-        setAddress(value);
+        setEmployeeId(value);
     }
 
-    const handleChangePhoneNumber = (event) => {
-        const value = event.target.value;
-        setPhoneNumber(value);
-    }
 
     return (
         <div className="row">
           <div className="offset-3 col-6">
             <div className="shadow p-4 mt-4">
-              <h1>Create a new Customer</h1>
-              <form onSubmit={handleSubmit} id="create-customer-form">
+              <h1>Create a new Salesperson</h1>
+              <form onSubmit={handleSubmit} id="create-salesperson-form">
                 <div className="form-floating mb-3">
                   <input
                     value={firstName}
@@ -93,29 +88,16 @@ function SalespersonForm() {
                 </div>
                 <div className="form-floating mb-3">
                   <input
-                    value={address}
-                    onChange={handleChangeAddress}
-                    placeholder="Address"
-                    required
-                    type="text"
-                    name="address"
-                    id="address"
-                    className="form-control"
-                  />
-                  <label htmlFor="address">Address</label>
-                </div>
-                <div className="form-floating mb-3">
-                  <input
-                    value={phoneNumber}
-                    onChange={handleChangePhoneNumber}
-                    placeholder="Phone Number"
+                    value={employeeId}
+                    onChange={handleChangeEmployeeId}
+                    placeholder="Employee Id"
                     required
                     type="number"
-                    name="phoneNumber"
-                    id="phoneNumber"
+                    name="employeeId"
+                    id="employeeId"
                     className="form-control"
                   />
-                  <label htmlFor="address">Phone Number</label>
+                  <label htmlFor="employeeId">Employee Id</label>
                 </div>
                 <button className="btn btn-primary">Create</button>
               </form>
@@ -125,4 +107,4 @@ function SalespersonForm() {
     );
 }
 
-export default CustomerForm;
+export default SalespersonForm;

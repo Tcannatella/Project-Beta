@@ -51,12 +51,12 @@ function SaleForm() {
 
     const handleChangeSalesperson = (event) => {
         const value = event.target.value;
-        setAddress(value);
+        setSalesperson(value);
     }
 
     const handleChangeCustomer = (event) => {
         const value = event.target.value;
-        setPhoneNumber(value);
+        setCustomer(value);
     }
 
     return (
@@ -125,4 +125,4 @@ function SaleForm() {
     );
 }
 
-export default TechnicianForm;
+export default SaleForm;

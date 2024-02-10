@@ -42,7 +42,7 @@ function Nav() {
             </li>
             <li className="nav-item">
               <NavLink className="nav-link active" aria-current="page" to="manufacturers/create">
-              Creat a Manufacturer
+              Create a Manufacturer
               </NavLink>
             </li>
             <li className="nav-item">
@@ -92,7 +92,7 @@ function Nav() {
             </li>
             <li className="nav-item">
               <NavLink className="nav-link active" aria-current="page" to="automobiles/create">
-              Create an automobiles
+              Create an automobile
               </NavLink>
             </li>
           </ul>

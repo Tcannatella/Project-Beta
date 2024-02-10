@@ -1,35 +1,33 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 function SalespersonForm() {
-    const [ firstName, setFirstName ] = useState('');
-    const [ lastName, setLastName ] = useState('');
-    const [ employeeId, setEmployeeId ] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [employeeId, setEmployeeId] = useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const data = {};
-        data.firstName = firstName;
-        data.lastName = lastName;
-        data.employeeId = employeeId;
-
-
-        const salespersonUrl = 'http://localhost:8090/api/salespeople/';
-        const fetchOptions = {
-            method: 'post',
-            body: JSON.stringify(data),
-            headers: {
-                'Content-Type': 'application/json',
-            },
+        const data = {
+            first_name: firstName,
+            last_name: lastName,
+            employee_id: employeeId
         };
 
         try {
-            const salespersonResponse = await fetch(salespersonUrl, fetchOptions);
+            const salespersonUrl = 'http://localhost:8090/api/salespeople/';
+            const fetchOptions = {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            };
 
+            const salespersonResponse = await fetch(salespersonUrl, fetchOptions);
             if (salespersonResponse.ok) {
                 setFirstName('');
                 setLastName('');
                 setEmployeeId('');
-
             } else {
                 console.error('Failed to create Salesperson:', salespersonResponse.statusText);
             }
@@ -41,18 +39,17 @@ function SalespersonForm() {
     const handleChangeFirstName = (event) => {
         const value = event.target.value;
         setFirstName(value);
-    }
+    };
 
     const handleChangeLastName = (event) => {
         const value = event.target.value;
         setLastName(value);
-    }
+    };
 
     const handleChangeEmployeeId = (event) => {
         const value = event.target.value;
         setEmployeeId(value);
-    }
-
+    };
 
     return (
         <div className="row">

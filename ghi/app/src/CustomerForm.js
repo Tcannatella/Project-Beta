@@ -9,10 +9,10 @@ function CustomerForm() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = {};
-        data.firstName = firstName;
-        data.lastName = lastName;
+        data.first_name = firstName;
+        data.last_name = lastName;
         data.address = address;
-        data.phoneNumber = phoneNumber;
+        data.phone_number = phoneNumber;
 
         const customerUrl = 'http://localhost:8090/api/customers/';
         const fetchOptions = {

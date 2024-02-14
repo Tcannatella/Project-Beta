@@ -1,20 +1,19 @@
-import  { useState, useEffect} from 'react';
+import { useState, useEffect} from 'react';
 
-function SalepersonList() {
-    const [salesperson, setSalesperson] = useState ([])
+function SalespersonList() {
+  const [salespersons, setSalespersons] = useState([])
 
-    const getData = async () => {
-        const response = await fetch ('http://localhost:8090/api/salespeople/')
-        if (response.ok) {
-            const { salesperson } = await response.json();
-            setSalesperson(salesperson);
-        }else {
-            console.error('An error occured fetching the data')
-        }
+  const getData = async ()=> {
+    const response = await fetch('http://localhost:8090/api/salespeoples/');
+    if (response.ok) {
+      const salespersonsData  = await response.json();
+      setSalespersons(salespersonsData.salesperson);
+    } else {
+      console.error('An error occurred fetching the data')
     }
+  }
 
-
-useEffect(()=> {
+  useEffect(()=> {
     getData()
   }, []);
 
@@ -26,18 +25,18 @@ useEffect(()=> {
         <table className="table table-striped m-3">
           <thead>
             <tr>
+              <th>Employee ID</th>
               <th>First Name</th>
               <th>Last Name</th>
-              <th>Employee Id</th>
             </tr>
           </thead>
           <tbody>
-            {salesperson.map(tech => {
+            {salespersons.map(salesperson => {
               return (
-                <tr key={tech.id}>
-                  <td>{ tech.first_name }</td>
-                  <td>{ tech.last_name }</td>
-                  <td>{ tech.employee_id }</td>
+                <tr key={salesperson.href}>
+                  <td>{ salesperson.employee_id }</td>
+                  <td>{ salesperson.first_name }</td>
+                  <td>{ salesperson.last_name }</td>
                 </tr>
               );
             })}
@@ -48,6 +47,4 @@ useEffect(()=> {
   );
 }
 
-
-
-export default SalepersonList;
+export default SalespersonList;

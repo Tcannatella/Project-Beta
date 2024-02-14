@@ -1,23 +1,8 @@
 from django.contrib import admin
-from .models import AutomobileVO, Salesperson, Customer, Sale
-# Register your models here.
+from .models import Salesperson, Sale, Customer, AutomobileVO
 
 
-@admin.register(AutomobileVO)
-class AutomobileVOAdmin(admin.ModelAdmin):
-    pass
-
-
-@admin.register(Salesperson)
-class SalespersonAdmin(admin.ModelAdmin):
-    pass
-
-
-@admin.register(Customer)
-class CustomerAdmin(admin.ModelAdmin):
-    pass
-
-
-@admin.register(Sale)
-class SaleAdmin(admin.ModelAdmin):
-    pass
+admin.site.register(AutomobileVO)
+admin.site.register(Customer)
+admin.site.register(Sale)
+admin.site.register(Salesperson)

@@ -1,54 +1,54 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect} from 'react';
 
 function SaleList() {
-    const [sales, setSales] = useState([]);
+  const [sales, setSales] = useState([])
 
-    const getData = async () => {
-        try {
-            const response = await fetch('http://localhost:8090/api/sales/');
-            if (response.ok) {
-                const { sale: fetchedSales } = await response.json(); // Rename to fetchedSales
-                setSales(fetchedSales);
-            } else {
-                console.error('An error occurred fetching the data');
-            }
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    };
+  const getData = async ()=> {
+    const response = await fetch('http://localhost:8090/api/sales/');
+    if (response.ok) {
+      const salesData = await response.json();
+      setSales(salesData.models);
+    } else {
+      console.error('An error occurred fetching the data')
+    }
+  }
 
-    useEffect(() => {
-        getData();
-    }, []);
+  useEffect(()=> {
+    getData()
+  }, []);
 
-    return (
-        <div className="my-5 container">
-            <div className="row">
-                <h1>Sales</h1>
+  return (
+    <div className="my-5 container">
+      <div className="row">
+        <h1>Sales</h1>
 
-                <table className="table table-striped m-3">
-                    <thead>
-                        <tr>
-                            <th>Price</th>
-                            <th>Automobile</th>
-                            <th>Salesperson</th>
-                            <th>Customer</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {sales.map(sale => (
-                            <tr key={sale.id}>
-                                <td>{sale.price}</td>
-                                <td>{sale.automobile}</td>
-                                <td>{sale.salesperson}</td>
-                                <td>{sale.customer}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    );
+        <table className="table table-striped m-3">
+          <thead>
+            <tr>
+              <th>Saleperson Employee ID</th>
+              <th>Salesperson Name</th>
+              <th>Customer</th>
+              <th>VIN</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            {sales.map(sale => {
+              return (
+                <tr key={sale.href}>
+                  <td>{ sale.salesperson.employee_id }</td>
+                  <td>{ sale.salesperson.first_name } { sale.salesperson.last_name }</td>
+                  <td>{ sale.customer.first_name } { sale.customer.last_name }</td>
+                  <td>{ sale.automobile.vin }</td>
+                  <td>{ sale.price }</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
 }
 
 export default SaleList;

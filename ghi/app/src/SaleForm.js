@@ -63,7 +63,6 @@ function SaleForm() {
         'Content-Type': 'application/json',
       },
     };
-    // need to reference manufacturer_id and pass into POST
     const response = await fetch(url, fetchConfig);
     if (response.ok) {
       setFormData({
@@ -84,7 +83,7 @@ function SaleForm() {
       [inputName]: value
     });
   }
-  // console.log(formData)
+
   return (
     <div className="row">
       <div className="offset-3 col-6">
